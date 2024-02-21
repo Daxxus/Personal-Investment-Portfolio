@@ -43,30 +43,16 @@ export const CryptoDetails = () => {
   const [period, setPeriod ] = useState(`24h`)
   const {data:cryptoHistory}= useGetCryptoHistoryQuery({coinId, period})
   const {data:cryptoDetail, isFetching} = useGetCryptoDetailsQuery(coinId)
-
+	// console.log(cryptoHistory);
   const periodArray = ["1h","3h", "24h", "7d", "30d", "1y", "3m", "3y", "5y"]
   const singleCryptoDetail = cryptoDetail?.data.coin
-
+  	
   const setSelect = (e) => {	
 	setPeriod(e.target.value)
   }
-
-  const coinPrice = []
-  const coinTimestamp = []
-
-  for (let i = 0; i < cryptoHistory?.data?.history?.length; i += 1) {
-	  coinPrice.push(cryptoHistory?.data?.history[i]?.price)
-  }
-  for (let i = 0; i < cryptoHistory?.data?.history?.length; i++) {
-	  coinTimestamp.push(
-		  new Date(
-			  Number(cryptoHistory?.data?.history[i]?.timestamp * 1000)
-		  ).toLocaleDateString()
-	  )
-  }
  
   const cryptoStats = [
-    { title: "Rank", value: singleCryptoDetail?.rank, icon: <MdNumbers /> },
+    	{ title: "Rank", value: singleCryptoDetail?.rank, icon: <MdNumbers /> },
 		{
 			title: "Price to USD",
 			value: `$ ${singleCryptoDetail?.price && millify(singleCryptoDetail?.price)}`,
@@ -154,6 +140,7 @@ export const CryptoDetails = () => {
           >
           <Cog6ToothIcon className="h-5 w-5" />
         </IconButton>
+
         <SelectVariants timeSpan={periodArray} change={setSelect} period={period}/>
         <LineChart coinHistory={cryptoHistory} currentPrice={singleCryptoDetail?.price && millify(singleCryptoDetail?.price)} coinName={singleCryptoDetail?.name}/>
 
@@ -295,7 +282,7 @@ export const CryptoDetails = () => {
 		</div>        
 		<div className="text-blue-gray-600">
 			<Footer />
-			</div>
+		</div>
       </div>
     </div>
   );

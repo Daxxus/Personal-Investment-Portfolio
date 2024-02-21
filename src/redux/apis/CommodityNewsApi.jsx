@@ -13,7 +13,11 @@ export const commoditiesNewsApi = createApi({
         getCommodityNews : builder.query({
             query : () => createReq(`/news/commodities-news`)
         }),
+        getCommodities : builder.query({
+            query : () => createReq(`/commodities/get-commodities`)
+        }),
     }),
 })
 
-export const {useGetCommodityNewsQuery} = commoditiesNewsApi
+export const {useGetCommodityNewsQuery, useGetCommoditiesQuery} = commoditiesNewsApi
+

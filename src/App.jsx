@@ -3,6 +3,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import { Suspense, lazy } from "react"
 const Error = lazy(() => import("./layouts/error"))
 const CryptoDetails = lazy(() => import("./pages/dashboard/cryptoDetails"))
+const CommodityDetails = lazy(() => import("./pages/dashboard/Commodities/CommodityDetails"))
 const Dashboard = lazy(() => import("./layouts/dashboard.jsx"))
 // import { CryptoDetails } from "@/pages/dashboard";
 import CircularWithValueLabel from "./pages/details/loader";
@@ -21,8 +22,6 @@ const queryClient = new QueryClient({
 	},
 })
 
-
-
 function App() {
   return (    
     <QueryClientProvider client={queryClient}>
@@ -31,13 +30,13 @@ function App() {
 				)} */}
         <Suspense fallback={<CircularWithValueLabel />}>
           <Routes>
-              <Route  path="dashboard/*" element={<Dashboard />} />
+              <Route path="dashboard/*" element={<Dashboard />} />
               <Route element={<CryptoDetails />} path='/crypto/:coinId' />       
+              <Route element={<CommodityDetails />} path='/commodity/:commId' />       
               <Route path="*" element={<Navigate to="/dashboard/home" replace />} />
               <Route element={<Error />} path='*' />
           </Routes>   
-        </Suspense>
-      
+        </Suspense>      
    </QueryClientProvider>
   );
 }
