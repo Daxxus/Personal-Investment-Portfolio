@@ -16,7 +16,9 @@ import CommodityLineChart from './CommodityChart';
 import { useLocation } from 'react-router-dom'
 import {Card,	CardHeader,	CardBody,	Typography,	} from "@material-tailwind/react";
 import { FcComboChart } from "react-icons/fc";
-import millify from 'millify';
+// import millify from 'millify';
+import { Ri24HoursFill } from "react-icons/ri";
+import { FcSalesPerformance } from "react-icons/fc";
 
 export const CommodityDetails = () => {
   const location = useLocation()
@@ -43,7 +45,7 @@ export const CommodityDetails = () => {
   const {data: singleCommodity, isFetching} = useGetSingleCommoditiesQuery(commId)
   const [controller, dispatch] = useMaterialTailwindController();
   const { sidenavType } = controller;
-  console.log(singleCommodity?.data);
+  // console.log(singleCommodity?.data);
 
   if(isFetching) return <CircularWithValueLabel/>
   return (
@@ -76,48 +78,52 @@ export const CommodityDetails = () => {
             </CardHeader>
             <CardBody >
               <table className="w-full table-auto ">	
-                <thead>
-                    <tr>
-                            
-                            <td>nr.</td>
-                            <td>Nazwa składki</td>
-                            <td>nr.</td>
-                            <td>Nazwa składki</td>
-                            <td>Kwota</td>
+                {/* <thead className='flex justify-end'>
+                    <tr className='mr-6 ' >                         
+                      <td  className='px-7'>{curr} </td>
+                      <td className='px-7'><FcSalesPerformance /></td>
+                      <td className='px-7' >  Vol.  </td>                         
                     </tr>
-                </thead>			
+                </thead> */}
+                
                 <tbody>				
-                  {singleCommodity?.data.map((item,i) =>  (
-                  <tr key={i} className='flex justify-between border-b border-blue-gray-50  text-sm'>
-                    <td className={" py-2 px-3 "}>
-                        <div className='grid xs:grid-cols-1 sm:grid-cols-2'>
-                          <Typography
-                          variant="h6"
-                          color="blue-gray"
-                          className="font-normal flex "                          
-                          >
-                            <div className="mr-2 text-xl ">								
-                              <FcComboChart />  
+                  {singleCommodity?.data.map((item,i) =>  (    
+                      <tr key={i} className='flex justify-between border-b border-blue-gray-50  text-sm'>
+                        <td className={" py-2 px-3 "}>
+                         {/* { console.log(item[`Change %`].slice(0,-1)   > 0) } */}
+                            <div className='grid xs:grid-cols-1 sm:grid-cols-2'>
+                              <Typography
+                              variant="h6"
+                              color="blue-gray"
+                              className="font-normal flex "                          
+                              >
+                                <div className="mr-2 text-xl ">								
+                                  <FcComboChart />  
+                                </div>
+                                {item.Date}
+                              </Typography>
                             </div>
-                            {item.Date}
-                          </Typography>
-                        </div>
-                    </td>			
-                    
-                    <td className={"py-2 "}>
-                      <div className='grid xs:grid-cols-1 sm:grid-cols-3'>
-                        <Typography className=" font-normal text-blue-gray-500 px-4">
-                          {item.Price.toFixed(2)}
-                          </Typography>
-                          <Typography className=" font-semibold text-blue-gray-600">
-                          {item["Change %"]}
-                          </Typography>
-                          <Typography className=" font-semibold text-blue-gray-600">
-                          {item["Vol."]}
-                          </Typography>
-                      </div>
-                    </td>								
-                  </tr>
+                        </td>			
+                        
+                        <td className={"py-2 "}>
+                          <div className='grid xs:grid-cols-1 sm:grid-cols-3'>
+                              <Typography className=" font-normal text-blue-gray-500 px-4" >
+                              {item.Price.toFixed(2)}
+                              </Typography>
+                              
+                              {item["Change %"].slice(0,-1) > 0 ?   <Typography color='green' className="font-bold ">
+                              {item["Change %"]}
+                              </Typography> :
+                                <Typography className="font-bold " color="red">
+                                {item["Change %"]}
+                                </Typography> }                            
+
+                              <Typography className=" font-semibold text-blue-gray-600">
+                              {item["Vol."]}
+                              </Typography>
+                          </div>
+                        </td>								
+                      </tr>                   
                   ) )}             
                 </tbody>
               </table>

@@ -13,10 +13,11 @@ import { useEffect, useState } from "react";
 
 export function Cryptos({top5}) {  
   const number = top5 ? 5:200
+  // console.log(number)
   const {data:crypto, isLoading}=useGetCryptosQuery(number)
   const [cryptos, setCryptos] = useState([])
   const [searchCrypto, setSearchCrypto]= useState(``)
-  
+// console.log(crypto);
   useEffect(()=>{
     const filterCryptos = crypto?.data.coins.filter(crypt => crypt.name.toLowerCase().includes(searchCrypto.toLowerCase()))
     setCryptos(filterCryptos)

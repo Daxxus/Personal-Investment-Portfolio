@@ -29,9 +29,6 @@ export default function CurrencyCard({pic, title, url, postTime, source}) {
         <Divider inset="context" />
         <CardContent orientation="horizontal">
         <Button > <a href={url} target="_blank" rel="noopener noreferrer">Read more</a></Button>
-            {/* <Typography level="body-xs" fontWeight="md" textColor="text.secondary">
-              6.3k views
-            </Typography> */}
             <Divider orientation="vertical" />
             <Typography level="body-md" fontWeight="md" textColor="text.secondary" mt={1}>
               {postTime}

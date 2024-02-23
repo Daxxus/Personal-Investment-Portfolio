@@ -1,24 +1,24 @@
 import React from "react";
 import {Typography} from "@material-tailwind/react";
 import { Link } from "react-router-dom";
-import { StatisticsCard, StatsCurrencyCard } from "@/widgets/cards";
+import { StatisticsCard } from "@/widgets/cards";
 import { StatisticsChart } from "@/widgets/charts";
 import useStatisticCard from "@/data/statistics-cards-data";
-import useCurrenciesStatsDataCard from "@/data/stats-currencies-rates.data";
 import { Cryptos } from "./cryptos";
+import { Currencies } from "./Currencies";
+
 import { useGetCryptosQuery } from "@/redux/apis/CryptoApi";
 import { projectsData, statisticsChartsData } from "@/data";
 import { CheckCircleIcon, ClockIcon } from "@heroicons/react/24/solid";
 
 
 export function Home() { 
-  const cryptos  = useStatisticCard()
-  const currencies = useCurrenciesStatsDataCard()
+  const cryptos  = useStatisticCard() 
 
   return (
     <div className="mt-12">
       <div className="mb-12 grid gap-y-10 gap-x-6 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
-        {cryptos.map(({ icon, title, footer, ...rest }) => (//carty total
+        {cryptos.map(({ icon, title, footer, ...rest }) => (
           <StatisticsCard
             key={title}            
             {...rest}          
@@ -35,27 +35,12 @@ export function Home() {
           />
         ))}
       </div>
-      <div className="mb-12 grid gap-y-10 gap-x-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
-        {currencies.map(({ icon, title, footer, ...rest }) => (
-          <StatsCurrencyCard
-            key={title}            
-            {...rest}
-            // color="red"           
-            title={title}
-            icon={React.createElement(icon, {
-              className: "w-6 h-6 text-white ",
-            })}
-            footer={
-              <Typography className="font-normal text-blue-gray-600 flex justify-between" variant="h5">
-                {/* <strong className={footer.color}> */}
-                  {footer.value}
-                  {/* </strong> */}
-                &nbsp;{footer.label}
-              </Typography>
-            }
-          />
-        ))}
-      </div>
+      <Currencies/>
+ 
+
+
+
+      
       {/* <div className="mb-6 grid grid-cols-1 gap-y-12 gap-x-6 md:grid-cols-1 xl:grid-cols-1 ">
         {statisticsChartsData.map((props) => (//charty
           <StatisticsChart          
@@ -77,7 +62,7 @@ export function Home() {
       <div className="mb-4 grid grid-cols-1 gap-6 ">
         <div className="flex justify-between mb-20">
            <Typography variant="h6" color="blue-gray" className="mb-2">
-            Top 5 Crypto Currencies
+            Top 5 Cryptos
             </Typography>
             <Typography variant="h6" color="blue-gray" className="mb-2">
               <Link to={`/dashboard/cryptos`}>More Cryptos</Link>              
@@ -88,13 +73,16 @@ export function Home() {
       <div className="mb-4 grid grid-cols-1 gap-6 ">
         <div className="flex justify-between mb-20">
            <Typography variant="h6" color="blue-gray" className="mb-2">
-            Top 5 Forex Currency pairs
+            Top 5 Commodities
             </Typography>
             <Typography variant="h6" color="blue-gray" className="mb-2">
-              <Link to={`/dashboard/cryptos`}>More Forex Pairs</Link>              
+              <Link to={`/dashboard/commodities`}>More Commodities</Link>              
             </Typography>
         </div>
-           {/* <Cryptos top5 />        */}
+        <div>
+
+          {/* <Commodities top5 />           */}
+        </div>
       </div>
     </div>
   );

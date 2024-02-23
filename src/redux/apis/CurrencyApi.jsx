@@ -1,7 +1,8 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
 
 const currenciesHeaders = {
-    'X-RapidAPI-Key': '9556836d5emsha94b903c8dce84ap1067fbjsn0931cfa53b42',
+    // 'X-RapidAPI-Key': '9556836d5emsha94b903c8dce84ap1067fbjsn0931cfa53b42',
+	'X-RapidAPI-Key': 'de0ce4fd20msh16fb3ec0272e347p111f3fjsnae6a889af005',
     'X-RapidAPI-Host': 'currency-conversion-and-exchange-rates.p.rapidapi.com'
 }
 
@@ -17,13 +18,13 @@ export const recentExchangeRates = createApi({
 			query:(currency)=>createRequest(`/latest?base=${currency} `)
 		}),				
 		getHistoricalRates :builder.query({
-			query:()=>createRequest(`/${`2019-10-29`}&base=${`PLN`}&symbols=${`USD,CAD,JPY`}`)
+			query:({base, into, startDate})=>createRequest(`/${startDate}&base=${base}&symbols=${into}`)
 		}),				
 		getTimeseriesRates :builder.query({
-			query:()=>createRequest(`/timeseries?start_date=${`2012-05-01`}&end_date=${`2012-05-25`}&base=${`EUR`}&symbols=${`USD,PLN,CHF`}`)
+			query:({base, startDate , endDate, into})=>createRequest(`/timeseries&start_date=${startDate}&end_date=${endDate}&base=${base}&symbols=${into}`)
 		}),				
 		getFluctuationRates :builder.query({
-			query:({currency, endDate, startDate})=>createRequest(`/fluctuation?start_date=${startDate}&end_date=${endDate}&base=${currency}`)
+			query:({currency, endDate, startDate, into})=>createRequest(`/fluctuation&start_date=${startDate}&end_date=${endDate}&base=${currency}&symbols=${into}`)
 		}),				
 		getCurrenciesSymbols :builder.query({
 			query:()=>createRequest(`/symbols`)

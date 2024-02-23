@@ -65,24 +65,3 @@ const CommodityLineChart = ({ history, name, currency }) => {
 }
 
 export default CommodityLineChart
-// Change %
-// : 
-// "+2.43%"
-// Date
-// : 
-// "02/16/2024"
-// High
-// : 
-// 374.65
-// Low
-// : 
-// 361.3
-// Open
-// : 
-// 365.6
-// Price
-// : 
-// 371.4
-// Vol.
-// : 
-// "1.54K"
