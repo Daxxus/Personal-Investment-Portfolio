@@ -4,6 +4,7 @@ import { Suspense, lazy } from "react"
 const Error = lazy(() => import("./layouts/error"))
 const CryptoDetails = lazy(() => import("./pages/dashboard/cryptoDetails"))
 const CommodityDetails = lazy(() => import("./pages/dashboard/Commodities/CommodityDetails"))
+const CurrencyDetails = lazy(() => import(`./pages/dashboard/Currencies/CurrencyDetails`))
 const Dashboard = lazy(() => import("./layouts/dashboard.jsx"))
 // import { CryptoDetails } from "@/pages/dashboard";
 import CircularWithValueLabel from "./pages/details/loader";
@@ -33,6 +34,7 @@ function App() {
               <Route path="dashboard/*" element={<Dashboard />} />
               <Route element={<CryptoDetails />} path='/crypto/:coinId' />       
               <Route element={<CommodityDetails />} path='/commodity/:commId' />       
+              <Route element={<CurrencyDetails />} path='/currency/:currencyId' />       
               <Route path="*" element={<Navigate to="/dashboard/home" replace />} />
               <Route element={<Error />} path='*' />
           </Routes>   

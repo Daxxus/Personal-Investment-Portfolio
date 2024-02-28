@@ -1,69 +1,64 @@
 import React, { useState } from 'react'
-import useCurrenciesStatsDataCard from "@/data/stats-currencies-rates.data";
-import {Typography, Input} from "@material-tailwind/react";
-import {StatsCurrencyCard } from "@/widgets/cards";
-import { useGetRecentRatesQuery, useGetHistoricalRatesQuery, useGetTimeseriesRatesQuery, useGetFluctuationRatesQuery, useGetCurrenciesSymbolsQuery } from '@/redux/apis/CurrencyApi';
+import {Input} from "@material-tailwind/react";
+import { Select, Option } from '@mui/joy';
+import {AllCurrenciesCard} from '@/pages/dashboard/Currencies';
+import {useGetFluctuationQuery, useGetCurrenciesSymbolsQuery } from '@/redux/apis/CurrencyApi';
+import { Link } from "react-router-dom";
 
-export const Currencies = () => {
-  const currencies = useCurrenciesStatsDataCard()
-  const [startDate, setStartDate] = useState(`2012-05-25`)
-  const [endDate, setEndDate] = useState(`2012-05-26`)
-  const {data: recentRates} = useGetRecentRatesQuery(`EUR`)
-  const {data:symbols} = useGetCurrenciesSymbolsQuery()
-  const {data: historicalRates} = useGetHistoricalRatesQuery({
-    base: `EUR`,
-    into: [`USD,CAD,JPY,PLN,AUD`],
-    startDate: startDate
-  })
-  const {data: timeSeries} = useGetTimeseriesRatesQuery({
-    base: `EUR`,
-    startDate: startDate,
-    endDate: endDate,
-    into: [`USD,CAD,JPY,PLN,AUD`]
-  })
-  const {data:fluctuationEUR}= useGetFluctuationRatesQuery({
-    currency: "EUR",
+export const Currencies = () => {    
+  const [startDate, setStartDate] = useState(`2024-01-01`)
+  const [endDate, setEndDate] = useState(`2024-02-28`)
+  const [baseCurrency, setBaseCurrency] = useState(`EUR`)
+  const {data:currencySymbol, isFetching} = useGetCurrenciesSymbolsQuery(`EUR`)
+  const {data:fluctuation, isLoading}= useGetFluctuationQuery({
+    currency:baseCurrency,
     endDate: endDate,
     startDate: startDate,
-    into: [`USD,PLN,AUD`]
-     })
-  // console.log(recentRates);
-  // console.log(historicalRates);
-  // console.log(symbols);
-  // console.log(timeSeries);
-  console.log(fluctuationEUR);
-  
+    into: []
+     } )  
+
+  const passCurrency = (e, val) => {     
+    // const pass = val?.target?.innerHTML.slice(0,3)  
+    setBaseCurrency(val)   
+  }  
+
+  if(isLoading || isFetching) return `Loading....`   
+console.log(fluctuation)
   return (
     <main>
-      <div className='flex'>
-        <Input type='date' onChange={(e) =>setStartDate(e.target.value)}/>
-        <Input type='date' onChange={(e) =>setEndDate(e.target.value)}/>
-      </div>
-      
+      <div className='grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 my-10 gap-6 max-w-full  '>
+        <Input type='date' onChange={(e)=> setStartDate(e.target.value)} label='Date from' />
+        <Input type='date' onChange={(e)=> setEndDate(e.target.value)} label='Date to'/>
+        <div className='grid grid-cols-subgrid gap-6 md:col-span-2 lg:col-span-1'> 
 
-      <div className="mb-12 grid gap-y-10 gap-x-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
-      {currencies.map(({ icon, title, footer, ...rest }) => (
-        <StatsCurrencyCard
-          key={title}            
-          {...rest}
-          // color="red"           
-          title={title}
-          icon={React.createElement(icon, {
-            className: "w-6 h-6 text-white ",
-          })}
-          footer={
-            <Typography className="font-normal text-blue-gray-600 flex justify-between" variant="h5">
-              {/* <strong className={footer.color}> */}
-                {footer.value}
-                {/* </strong> */}
-              &nbsp;{footer.label}
-            </Typography>
-          }
-        />
-      ))}
-    </div>
+            <Select
+              color="danger"
+              // value={baseCurrency}         
+              // className='col-start-1'
+              disabled={false}
+              placeholder="Select the base Currency" 
+              size="md"
+              variant="outlined"
+              onChange={passCurrency }        
+            >
+              {Object.entries(currencySymbol?.symbols || {})?.map(([key, val]) => (
+                    <Option key={key} value={key}>{[key +`: ` + val]} </Option>
+                  ))}       
+            </Select>
+        </div>
+      </div>      
+
+      <div className="mb-12 grid gap-y-10 gap-x-6 md:grid-cols-3 sm:grid-cols-2 xl:grid-cols-4 2xl:grid-cols-5"> 
+       { Object.entries(fluctuation?.rates || {})?.map(([key, value]) => (
+          <Link state={{baseCurr: fluctuation?.base, dateFrom: fluctuation?.start_date, dateTo: fluctuation?.end_date}} key={key}  to={`/currency/${key}`  }>          
+            <AllCurrenciesCard change={value?.change_pct} startRate={value?.start_rate} endRate={value?.end_rate} intoCurrency={key} baseCurrency={fluctuation?.base}/>
+          </Link>        
+        ))}
+      </div>
     </main>
   )
 }
 
 export default Currencies
+
+  

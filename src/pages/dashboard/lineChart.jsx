@@ -6,6 +6,8 @@ import millify from "millify"
 Chart.register(...registerables)
 
 const LineChart = ({ coinHistory, currentPrice, coinName }) => {
+	console.log(coinHistory)
+	console.log(currentPrice);
 	const coinPrice = []
 	const coinTimestamp = []
 	const change = coinHistory?.data?.change
@@ -20,7 +22,7 @@ const LineChart = ({ coinHistory, currentPrice, coinName }) => {
 			).toLocaleDateString()
 		)
 	}
-
+console.log(coinTimestamp);
 	const data = {
 		labels: coinTimestamp,
 		datasets: [

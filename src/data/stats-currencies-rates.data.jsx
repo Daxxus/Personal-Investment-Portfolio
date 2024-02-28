@@ -24,7 +24,7 @@
     const {data:fluctuationUSD}= useGetFluctuationRatesQuery({
       currency: "USD",
       endDate: today,
-      startDate: previousDay
+      startDate: previousDay,
       })
     const {data:fluctuationGBP}= useGetFluctuationRatesQuery({
       currency: "GBP",
@@ -37,8 +37,8 @@
     const usdChangeToCHF = fluctuationUSD?.rates?.CHF?.change_pct
     const usdChangeToPLN = fluctuationUSD?.rates?.PLN?.change_pct
     const gbpChangeToUSD = fluctuationGBP?.rates?.USD?.change_pct   
-   
-  return [
+
+    const forexPairs = [
       {
         color: "green",
         icon:  FaEuroSign,      
@@ -120,7 +120,10 @@
           label: "day-to-day",
         },
       },
-    ];
+    ]
+    // console.log(forexPairs.slice(0,2));
+   
+  return forexPairs
     
   }
   export default useCurrenciesStatsDataCard

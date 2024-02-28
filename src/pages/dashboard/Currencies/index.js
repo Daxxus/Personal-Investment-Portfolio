@@ -1,3 +1,5 @@
 export * from "@/pages/dashboard/Currencies/currencies"
 export * from "@/pages/dashboard/Currencies/currenciesNews"
 export * from "@/pages/dashboard/Currencies/currencyCard"
+export * from "@/pages/dashboard/Currencies/CurrencyDetails"
+export * from "@/pages/dashboard/Currencies/AllCurrencyCard"

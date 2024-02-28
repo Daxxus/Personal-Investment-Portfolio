@@ -1,19 +1,20 @@
 import React from "react";
 import {Typography} from "@material-tailwind/react";
 import { Link } from "react-router-dom";
-import { StatisticsCard } from "@/widgets/cards";
-import { StatisticsChart } from "@/widgets/charts";
+import { StatisticsCard, StatsCurrencyCard } from "@/widgets/cards";
 import useStatisticCard from "@/data/statistics-cards-data";
+import useCurrenciesStatsDataCard from "@/data/stats-currencies-rates.data";
 import { Cryptos } from "./cryptos";
-import { Currencies } from "./Currencies";
-
+import { Commodities } from "./Commodities";
+import { StatisticsChart } from "@/widgets/charts";
 import { useGetCryptosQuery } from "@/redux/apis/CryptoApi";
 import { projectsData, statisticsChartsData } from "@/data";
 import { CheckCircleIcon, ClockIcon } from "@heroicons/react/24/solid";
 
 
 export function Home() { 
-  const cryptos  = useStatisticCard() 
+  const cryptos  = useStatisticCard()
+  const currencies = useCurrenciesStatsDataCard()
 
   return (
     <div className="mt-12">
@@ -35,12 +36,27 @@ export function Home() {
           />
         ))}
       </div>
-      <Currencies/>
- 
-
-
-
-      
+      <div className="mb-12 grid gap-y-10 gap-x-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
+        {currencies.map(({ icon, title, footer, ...rest }) => (
+          <StatsCurrencyCard
+            key={title}            
+            {...rest}
+            // color="red"           
+            title={title}
+            icon={React.createElement(icon, {
+              className: "w-6 h-6 text-white ",
+            })}
+            footer={
+              <Typography className="font-normal text-blue-gray-600 flex justify-between" variant="h5">
+                {/* <strong className={footer.color}> */}
+                  {footer.value}
+                  {/* </strong> */}
+                &nbsp;{footer.label}
+              </Typography>
+            }
+          />
+        ))}
+      </div>
       {/* <div className="mb-6 grid grid-cols-1 gap-y-12 gap-x-6 md:grid-cols-1 xl:grid-cols-1 ">
         {statisticsChartsData.map((props) => (//charty
           <StatisticsChart          
@@ -81,7 +97,7 @@ export function Home() {
         </div>
         <div>
 
-          {/* <Commodities top5 />           */}
+       
         </div>
       </div>
     </div>

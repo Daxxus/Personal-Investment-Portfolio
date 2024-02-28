@@ -7,7 +7,9 @@ module.exports = withMT({
   theme: {
     extend: {},
   },
-  plugins: [],
+  plugins: [
+    // require('preline/plugin'),
+  ],
 });
 // module.exports = {
 //   content: [
