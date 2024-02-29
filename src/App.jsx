@@ -8,6 +8,8 @@ const CurrencyDetails = lazy(() => import(`./pages/dashboard/Currencies/Currency
 const Dashboard = lazy(() => import("./layouts/dashboard.jsx"))
 // import { CryptoDetails } from "@/pages/dashboard";
 import CircularWithValueLabel from "./pages/details/loader";
+
+
 import {
 	QueryClient,
 	QueryClientProvider,

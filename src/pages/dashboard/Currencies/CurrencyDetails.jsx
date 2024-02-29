@@ -40,7 +40,7 @@ const CurrencyDetails = () => {
     // const pass = val?.target?.innerHTML.slice(0,3)
     setIntoCurrency(val)   
   } 
-
+  // Maximum of 365 day time range
   console.log(timeSeries)
  
   if(isFetching || isLoading) return <CircularWithValueLabel/>

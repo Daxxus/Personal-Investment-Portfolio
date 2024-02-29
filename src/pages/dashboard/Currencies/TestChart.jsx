@@ -7,24 +7,24 @@ Chart.register(...registerables)
 
 const TestChart = ({ historyRates, currentPrice, coinName , passedCurrency}) => {
 
-const currencyValue = Object.values(historyRates?.rates || {})?.map((val) => val)
-const currencyDate = Object.keys(historyRates?.rates || {})?.map((key) => key)
-const coinPrice = []
-const coinTimestamp = []
-// const sss = currencyValue.sort()
-const sorted = currencyDate.sort()
+	const currencyValue = Object.values(historyRates?.rates || {})?.map((val) => val)
+	const currencyDate = Object.keys(historyRates?.rates || {})?.map((key) => key)
+	const coinPrice = []
+	const coinTimestamp = []
+	// const sss = currencyValue.sort()
+	const sorted = currencyDate.sort()
 
 
-// console.log(historyRates?.rates)
-console.log(sorted)
-console.log(currencyValue)
+	// console.log(historyRates?.rates)
+	// console.log(sorted)
+	// console.log(currencyValue)
 
-const first = currencyValue[0][`${passedCurrency}`]
-const last = currencyValue[currencyValue.length -1][`${passedCurrency}`]
-const change = ((first - last) / last) * 100
+	const first = currencyValue[0][`${passedCurrency}`]
+	const last = currencyValue[currencyValue.length -1][`${passedCurrency}`]
+	const change = ((first - last) / last) * 100
 
 
-for (let i = 0; i < currencyValue.length; i ++) {
+    for (let i = 0; i < currencyValue.length; i ++) {
 		coinPrice.push(currencyValue[i][`${passedCurrency}`])
         coinTimestamp.push(currencyDate[i])
 	}
