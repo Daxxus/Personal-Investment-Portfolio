@@ -63,8 +63,10 @@ console.log(coinTimestamp);
 					Current {coinName} Price: $ {currentPrice}
 					</Typography>
 				</div>
-			</div>		
-			<Line data={data} options={options} />
+			</div>	
+			<div className='h-96'>
+			    <Line data={data} options={options} />
+			</div>	
 		</main>
 	)
 }

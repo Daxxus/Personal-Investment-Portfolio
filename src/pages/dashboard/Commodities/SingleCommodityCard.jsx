@@ -10,25 +10,25 @@ import CardCover from '@mui/joy/CardCover';
 export default function SingleCommodityCard({country,currency, full_name, group, title}) {
   return (
     <Box
-    sx={{
-      perspective: '1000px',
-      transition: 'transform 0.4s',
-      '& > div, & > div > div': {
-        transition: 'inherit',
-      },
-      '&:hover': {
-        '& > div': {
-          transform: 'rotateY(30deg)',
-          '& > div:nth-child(2)': {
-            transform: 'scaleY(0.9) translate3d(20px, 30px, 40px)',
-          },
-          '& > div:nth-child(3)': {
-            transform: 'translate3d(45px, 50px, 40px)',
+        sx={{
+        perspective: '1000px',
+        transition: 'transform 0.4s',
+        '& > div, & > div > div': {
+          transition: 'inherit',
+        },
+        '&:hover': {
+          '& > div': {
+            transform: 'rotateY(30deg)',
+            '& > div:nth-child(2)': {
+              transform: 'scaleY(0.9) translate3d(20px, 30px, 40px)',
+            },
+            '& > div:nth-child(3)': {
+              transform: 'translate3d(45px, 50px, 40px)',
+            },
           },
         },
-      },
-    }}
-  >
+      }}
+      >
       <Card sx={{ borderRadius: `15px`, width: 300, maxWidth: '100%', padding:`20px`, boxShadow:`10px 10px 10px`}}  
       color="primary"
       invertedColors
@@ -79,5 +79,6 @@ export default function SingleCommodityCard({country,currency, full_name, group,
         </CardOverflow>
       </Card>
     </Box>
-  );
+  )
+    /* emotion-disable-server-rendering-unsafe-selector-warning-please-do-not-use-this-the-warning-exists-for-a-reason */
 }

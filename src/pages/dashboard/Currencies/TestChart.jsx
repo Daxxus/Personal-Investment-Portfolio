@@ -6,42 +6,27 @@ import millify from "millify"
 Chart.register(...registerables)
 
 const TestChart = ({ historyRates, currentPrice, coinName , passedCurrency}) => {
-
-	const currencyValue = Object.values(historyRates?.rates || {})?.map((val) => val)
-	const currencyDate = Object.keys(historyRates?.rates || {})?.map((key) => key)
+	const test = []
 	const coinPrice = []
 	const coinTimestamp = []
-	// const sss = currencyValue.sort()
-	const sorted = currencyDate.sort()
+	const entries = Object.entries(historyRates?.rates || {})?.sort()?.map(( val) => ( val))	
+	
+	const first = entries[0][1][`${passedCurrency}`]
+	const last = entries[entries.length -1][1][`${passedCurrency}`]
+	const change = ((last - first) / first) * 100	
 
-
-	// console.log(historyRates?.rates)
-	// console.log(sorted)
-	// console.log(currencyValue)
-
-	const first = currencyValue[0][`${passedCurrency}`]
-	const last = currencyValue[currencyValue.length -1][`${passedCurrency}`]
-	const change = ((first - last) / last) * 100
-
-
-    for (let i = 0; i < currencyValue.length; i ++) {
-		coinPrice.push(currencyValue[i][`${passedCurrency}`])
-        coinTimestamp.push(currencyDate[i])
-	}
-	// for (let i = 0; i < coinHistory?.data?.history?.length; i++) {
-	// 	coinTimestamp.push(
-	// 		new Date(
-	// 			Number(coinHistory?.data?.history[i]?.timestamp * 1000)
-	// 		).toLocaleDateString()
-	// 	)
-	// }
-    // console.log(coinTimestamp)
+    for (let i = 0; i < entries.length; i ++) {
+		// coinPrice.push(entries[i][1][`${passedCurrency}`])
+        // coinTimestamp.push(entries[i][0])
+		test.push({x: entries[i][0], y: entries[i][1][`${passedCurrency}`]})
+	}	
+	
 	const data = {
-		labels: coinTimestamp,
+		labels: test?.map(({x})  => x),
 		datasets: [
 			{
 				label: `Current price ${currentPrice} $`,				
-				data: coinPrice,
+				data: test?.map(({y})  => y),
 				fill: true,
 				backgroundColor: "#0071bd",
 				borderColor: "#0071bd",

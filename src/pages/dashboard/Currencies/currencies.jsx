@@ -1,34 +1,45 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {Input} from "@material-tailwind/react";
 import { Select, Option } from '@mui/joy';
 import {AllCurrenciesCard} from '@/pages/dashboard/Currencies';
 import {useGetFluctuationQuery, useGetCurrenciesSymbolsQuery } from '@/redux/apis/CurrencyApi';
 import { Link } from "react-router-dom";
 import { Typography } from '@mui/material';
-// import { ToastContainer, toast } from 'react-toastify'
-// import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css';
 
 export const Currencies = () => {    
-  // const notify = () => toast("Great job, You've just beeing signed up")
+  const notify = () => toast("Maximum of 365 day time range !!!")
   const [baseCurrency, setBaseCurrency] = useState(`EUR`)  
   const {data:currencySymbol, isFetching} = useGetCurrenciesSymbolsQuery(`EUR`)
-  const [startDate, setStartDate] = useState(`2024-01-01`)
-  const [endDate, setEndDate] = useState(`2024-02-28`)
-
+  const [startDate, setStartDate] = useState(`2024-03-01`)
+  const [endDate, setEndDate] = useState(new Date().toLocaleDateString(`en-Ca`))
+  const [txt, setTxt]= useState(`Maximum of 365 day time range !!!`)
   let date1 = new Date(startDate);
   let date2 = new Date(endDate);
   let Difference_In_Time = date2.getTime() - date1.getTime();
   let Difference_In_Days = Math.round(Difference_In_Time / (1000 * 3600 * 24));
 
+  
   const {data:fluctuation, isLoading}= useGetFluctuationQuery({
     currency:baseCurrency,
     endDate: Difference_In_Days < 0 || Difference_In_Days > 365 ? null : endDate,
     startDate: Difference_In_Days < 0 || Difference_In_Days > 365 ? null : startDate ,
     into: []
-     } )  
+    }) 
+      
           
-//  console.log(fluctuation)
+    useEffect(()=>{   
+      if(Difference_In_Days < 0 || Difference_In_Days > 365){
+        notify()
+        setTxt( <Typography variant='h4'>Warning "Date to" must be higher than "Date from"</Typography>)
+      } 
+      // else{
+      //   setTxt(<Typography>Well done!!!</Typography>)
+      // }     
+    },[startDate, endDate])
 
+    // console.log(fluctuation)
   const passCurrency = (e, val) => {     
     setBaseCurrency(val)   
   }  
@@ -37,7 +48,7 @@ export const Currencies = () => {
  
   return (
     <main>
-      <Typography variant='' color={`red`}>Maximum of 365 day time range !!!</Typography>
+      <Typography variant=''  color={`red`}>{txt} </Typography>
       <div className='grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mb-10 mt-3 gap-6 max-w-full  '>
         <Input type='date' onChange={(e)=> setStartDate(e.target.value)} label='Date from' />
         <Input type='date' onChange={(e)=> setEndDate(e.target.value)} label='Date to'/>
@@ -60,7 +71,7 @@ export const Currencies = () => {
         </div>
       </div>  
     
-      {/* <ToastContainer autoClose={2000} /> */}
+      <ToastContainer autoClose={5000} />
       <div className="mb-12 grid gap-y-10 gap-x-6 md:grid-cols-3 sm:grid-cols-2 xl:grid-cols-4 2xl:grid-cols-5"> 
        { Object.entries(fluctuation?.rates || {})?.map(([key, value]) => (
           <Link state={{baseCurr: fluctuation?.base, dateFrom: startDate, dateTo: endDate}} key={key}  to={`/currency/${key}`  }>          

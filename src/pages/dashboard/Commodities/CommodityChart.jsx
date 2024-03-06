@@ -3,27 +3,36 @@ import { Chart,  registerables } from "chart.js"
 import React from "react"
 import { Typography } from "@material-tailwind/react"
 import millify from 'millify';
+import { useState, useEffect } from "react";
 Chart.register(...registerables)
 
 const CommodityLineChart = ({ history, name, currency }) => {    
+	const [chartData, setChartData] = useState([])
 	const commodityPrice = []
 	const commodityDate = []
     const currentPrice = history?.data[0]?.Price
     const lastPrice = history?.data[history?.data.length -1]?.Price
 	const change = (currentPrice - lastPrice) / lastPrice *100
-	// console.log(currentPrice, lastPrice, change)
-	
-	for (let i = 0; i < history?.data?.length; i ++) {
-		commodityPrice.push(history?.data[i]?.Price)
-        commodityDate.push(history?.data[i]?.Date)
-	}	
-  
+		
+	// for (let i = 0; i < history?.data?.length; i ++) {
+	// 	commodityPrice.push(history?.data[i]?.Price)
+    //     commodityDate.push(history?.data[i]?.Date)
+	// }	
+//   console.log(history?.data?.map(({Date}) => Date ));
+	const chart = () => {
+		setChartData(history.data.map(({Price}) => Price ))
+	}
+	useEffect(() => {
+		chart();
+	  },[])
+	  
+console.log(chartData);
 	const data = {
-		labels: commodityDate,
+		labels: history?.data?.map(({Date}) => Date ),
 		datasets: [
 			{
 				label: `Current price ${currentPrice && millify(currentPrice,{precision:3})} ${currency} `,				
-				data: commodityPrice,
+				data: chartData,
 				fill: true,
 				backgroundColor: "#0071bd",
 				borderColor: "#0071bd",
@@ -59,7 +68,9 @@ const CommodityLineChart = ({ history, name, currency }) => {
 					</Typography>
 				</div>
 			</div>		
-			<Line data={data} options={options} />
+			<div className='h-96'>
+			    <Line data={data} options={options} />
+			</div>	
 		</main>
 	)
 }
