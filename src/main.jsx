@@ -9,6 +9,7 @@
 =========================================================
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
+import { CalcProvider } from "./context/Calculation/Calculation";
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
@@ -21,7 +22,8 @@ import "../public/css/tailwind.css";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <BrowserRouter>
+    <CalcProvider>
+       <BrowserRouter>
       <ThemeProvider>
         <MaterialTailwindControllerProvider>
           <Provider store={store}>
@@ -30,5 +32,6 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         </MaterialTailwindControllerProvider>
       </ThemeProvider>
     </BrowserRouter>
+    </CalcProvider>   
   </React.StrictMode>
 );

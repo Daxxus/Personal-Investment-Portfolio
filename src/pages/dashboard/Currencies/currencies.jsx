@@ -19,15 +19,13 @@ export const Currencies = () => {
   let date2 = new Date(endDate);
   let Difference_In_Time = date2.getTime() - date1.getTime();
   let Difference_In_Days = Math.round(Difference_In_Time / (1000 * 3600 * 24));
-
   
   const {data:fluctuation, isLoading}= useGetFluctuationQuery({
     currency:baseCurrency,
     endDate: Difference_In_Days < 0 || Difference_In_Days > 365 ? null : endDate,
     startDate: Difference_In_Days < 0 || Difference_In_Days > 365 ? null : startDate ,
     into: []
-    }) 
-      
+    })       
           
     useEffect(()=>{   
       if(Difference_In_Days < 0 || Difference_In_Days > 365){
@@ -39,7 +37,6 @@ export const Currencies = () => {
       // }     
     },[startDate, endDate])
 
-    // console.log(fluctuation)
   const passCurrency = (e, val) => {     
     setBaseCurrency(val)   
   }  

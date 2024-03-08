@@ -1,28 +1,21 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { useLocation } from 'react-router-dom'
 import CircularWithValueLabel from '../../details/loader'
 import {Input, Typography} from "@material-tailwind/react";
 import { Select, Option } from '@mui/joy';
 import TestChart from './TestChart'
-import {
-  Sidenav,
-  DashboardNavbar,
-  Configurator,
-  Footer,
-} from "@/widgets/layout";
+import {Sidenav,DashboardNavbar,Configurator,Footer} from "@/widgets/layout";
 import StackedAreas from './CurrencyChart';
 import routes from "@/routes";
 import { useMaterialTailwindController, setOpenConfigurator } from "@/context";
 import { IconButton } from "@material-tailwind/react";
 import { Cog6ToothIcon } from "@heroicons/react/24/solid";
-import {useGetFluctuationQuery, useGetCurrenciesSymbolsQuery, useGetRecentRatesQuery,  useGetTimeseriesRatesQuery } from '@/redux/apis/CurrencyApi';
-import MultiChart from './MultiChart';
-// import ProgressiveLineChart from './ProgressiveLineChart';
-
-
+import {useGetCurrenciesSymbolsQuery,useGetTimeseriesRatesQuery} from '@/redux/apis/CurrencyApi';
+import {Tables} from '@/pages/dashboard/Currencies/index';
 
 const CurrencyDetails = () => {
+ 
   const [controller, dispatch] = useMaterialTailwindController();
   const location = useLocation()
   const { sidenavType } = controller
@@ -32,14 +25,13 @@ const CurrencyDetails = () => {
   const {baseCurr, dateFrom, dateTo} = location.state
   const [startDate, setStartDate] = useState(dateFrom)
   const [endDate, setEndDate] = useState(dateTo)
-
   const {data: timeSeries, isLoading} = useGetTimeseriesRatesQuery({
     base: baseCurr,
     into: intoCurrency,
     startDate: startDate ,
     endDate: endDate ,
-  })
-  // console.log(timeSeries);
+  }) 
+
   const passCurrency = (e, val) => {      
     setIntoCurrency(val)   
   }   
@@ -55,7 +47,7 @@ const CurrencyDetails = () => {
         }
         />
       <div className="p-4 xl:ml-80">
-      <DashboardNavbar/>
+        <DashboardNavbar/>
           <Configurator/>
           <IconButton
           size="lg"
@@ -86,22 +78,14 @@ const CurrencyDetails = () => {
                 ))}       
                 </Select>
             </div>
-          </div>  
-          {/* <Typography variant='h5' className="mt-1 mb-2 pl-2 font-medium">{baseCurr} current Rate: </Typography> */}
+          </div>        
+          <StackedAreas selectedCurrencies={intoCurrency} rates={timeSeries} base={baseCurr} start={startDate} end={endDate} />
 
-          {/* <ProgressiveLineChart historyRates={timeSeries} passedCurrency={currencyId}/> */}
-          
+          {/* <div className=''> */}
+            <Tables timeSeries={timeSeries} intoCurrency={currencyId}/>
+          {/* </div>        */}
 
-          {/* <TestChart historyRates={timeSeries} passedCurrency={currencyId}/> */}
-          {/* <MultiChart/> */}
-          <StackedAreas selectedCurrencies={intoCurrency} rates={timeSeries} base={baseCurr} />
-
-          
-
-         
-          idClicked:{currencyId}/ baseCurrency:{baseCurr} /from: {dateFrom} / to: {dateTo}
-
-          <div className="text-blue-gray-600">
+          <div className="text-blue-gray-600 mt-5">
             <Footer />
           </div>
       </div>

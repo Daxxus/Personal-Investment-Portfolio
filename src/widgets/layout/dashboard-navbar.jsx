@@ -1,26 +1,74 @@
 import { useLocation, Link } from "react-router-dom";
-import {
-  Navbar,
-  Typography,
-  Button,
-  IconButton,
-  Breadcrumbs,
-} from "@material-tailwind/react";
-import { 
-  Cog6ToothIcon,  
-  Bars3Icon,
-} from "@heroicons/react/24/solid";
-import {
-  useMaterialTailwindController,
-  setOpenConfigurator,
-  setOpenSidenav,
-} from "@/context";
+import { NavLink } from "react-router-dom"
+import { useCalculateContext } from "@/context/Calculation/useCalculateContext";
+import {Navbar,Typography,IconButton,Breadcrumbs} from "@material-tailwind/react";
+import {Cog6ToothIcon,Bars3Icon} from "@heroicons/react/24/solid";
+import Button from '@mui/joy/Button';
+import Box from '@mui/joy/Box';
+import {useMaterialTailwindController,setOpenConfigurator,setOpenSidenav} from "@/context"
 
+const Nav = ({children}) => {
+  return(
+    <Box
+    px={2}
+    py={1}    
+    >
+      {children}
+    </Box>
+  )
+}
 export function DashboardNavbar() {
+  const {currencyROI, commodityyROI, coinROI, totalROI } = useCalculateContext()
   const [controller, dispatch] = useMaterialTailwindController();
   const { fixedNavbar, openSidenav } = controller;
   const { pathname } = useLocation();
   const [layout, page] = pathname.split("/").filter((el) => el !== "");
+  
+  const Links = [
+    {label: (
+      <Button
+      color="primary"
+      disabled={false}
+      loading={false}
+      onClick={function(){}}
+      size="lg"
+      variant="plain"
+      >
+       ROI Coins: {coinROI}
+      </Button>),to : "/fdf"},
+    {label: (
+      <Button
+      color="success"
+      disabled={false}
+      loading={false}
+      onClick={function(){}}
+      size="lg"
+      variant="soft"
+      >
+       ROI Commodities: {commodityyROI}
+      </Button>),to : "/fwefew"},
+    {label:   ( <Button
+      color="danger"
+      disabled={false}
+      loading={false}
+      onClick={function(){}}
+      size="lg"
+      variant="outlined"
+      >
+       ROI Currencies: {currencyROI}
+      </Button>),to : "/"},
+    {label: (
+      <Button
+      color="neutral"
+      disabled={false}
+      loading={false}
+      onClick={function(){}}
+      size="lg"
+      variant="solid"
+      >
+       ROI Total: {totalROI}
+      </Button>),to : "/"},
+  ]
 
   return (
     <Navbar
@@ -34,13 +82,26 @@ export function DashboardNavbar() {
       blurred={fixedNavbar}
     >
       <div className="flex flex-col-reverse justify-between gap-6 md:flex-row md:items-center">
-        <div className="capitalize">
-          {/* <Breadcrumbs
+        <div className="">
+
+          <Breadcrumbs
             className={`bg-transparent p-0 transition-all ${
               fixedNavbar ? "mt-1" : ""
             }`}
           >
-            <Link to={`/${layout}`}>
+            {Links.map(({label,to},i)  => (
+              <Nav key={i}>
+                  <NavLink
+                    to={to}
+                    // end
+                  >
+                    {label}
+                  </NavLink>
+              </Nav>
+
+            ))}
+
+            {/* <Link to={`/${layout}`}>
               <Typography
                 variant="small"
                 color="blue-gray"
@@ -48,18 +109,19 @@ export function DashboardNavbar() {
               >
                 {layout}
               </Typography>
-            </Link>
-            <Typography
+            </Link> */}
+            {/* <Typography
               variant="small"
               color="blue-gray"
               className="font-normal"
             >
-              {page}
-            </Typography>
+             ROI
+            </Typography> */}
           </Breadcrumbs>
-          <Typography variant="h6" color="blue-gray">
-            {page}
+          {/* <Typography variant="h6" color="blue-gray">
+           patrz DashboardNavbar
           </Typography> */}
+
         </div>
         <div className="flex items-center">         
           <IconButton
