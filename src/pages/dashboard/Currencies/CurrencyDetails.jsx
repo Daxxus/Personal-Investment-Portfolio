@@ -4,7 +4,6 @@ import { useLocation } from 'react-router-dom'
 import CircularWithValueLabel from '../../details/loader'
 import {Input, Typography} from "@material-tailwind/react";
 import { Select, Option } from '@mui/joy';
-import TestChart from './TestChart'
 import {Sidenav,DashboardNavbar,Configurator,Footer} from "@/widgets/layout";
 import StackedAreas from './CurrencyChart';
 import routes from "@/routes";
@@ -82,7 +81,7 @@ const CurrencyDetails = () => {
           <StackedAreas selectedCurrencies={intoCurrency} rates={timeSeries} base={baseCurr} start={startDate} end={endDate} />
 
           {/* <div className=''> */}
-            <Tables timeSeries={timeSeries} intoCurrency={currencyId}/>
+            <Tables timeSeries={timeSeries} intoCurrency={intoCurrency} baseCurrency={baseCurr}/>
           {/* </div>        */}
 
           <div className="text-blue-gray-600 mt-5">

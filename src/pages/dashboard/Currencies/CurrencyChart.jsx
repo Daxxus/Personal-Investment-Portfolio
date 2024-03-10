@@ -11,16 +11,14 @@ export default function StackedAreas({selectedCurrencies, rates, base, start, en
   const recentRate = Object.entries(recent?.rates || {})?.find(([key, val])=> key === `${selectedCurrencies}` && val)
   const value = Object.values(rates?.rates || {})?.sort()?.map(val => val[`${selectedCurrencies}`] )
   
-  const obj = {label: `Price`, fill : true, backgroundColor: "#" + parseInt(Math.random() * 16777215).toString(16), borderColor: "#0071bd", borderWidth: 1, data : value}   
-  const [chartData, setChartData] = useState([obj])
- 
+  const obj = {label: `Rate`, fill : true, backgroundColor: "#" + parseInt(Math.random() * 16777215).toString(16), borderColor: "#0071bd", borderWidth: 1, data : value}   
+
+  const [chartData, setChartData] = useState([obj]) 
   const key = Object.keys(rates?.rates || {})?. sort()?.map(key => key)
   
-  const chart = () => {
-    // setChartData([...chartData, obj])
+  const chart = () => {    
     setChartData([obj])
-
-  };
+  }
 
   useEffect(() => {
     chart()
