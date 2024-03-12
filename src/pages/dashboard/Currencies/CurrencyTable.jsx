@@ -1,15 +1,13 @@
-import {Card,CardHeader,CardBody,Typography,Chip,Tooltip, Input} from "@material-tailwind/react";
-// import { Select, Option } from "@material-tailwind/react";
+import {Card,CardHeader,CardBody,Typography,Chip, Input} from "@material-tailwind/react";
 import { Select, Option } from "@mui/joy";
 import { ToastContainer, toast } from 'react-toastify'
-  import { useCalculateContext } from '@/context/Calculation/useCalculateContext';
-  import { EllipsisVerticalIcon } from "@heroicons/react/24/outline";
-  import { useEffect, useState } from "react";
-import { SliderValueLabel } from "@mui/material";
+import { useCalculateContext } from '@/context/Calculation/useCalculateContext'; 
+import { useEffect, useState, useRef } from "react";
   
   export function Tables({timeSeries, intoCurrency, baseCurrency}) {
-    const [currTransSumUp, setCurrTransSumUp] = useState([])
-  
+    const [currTransSumUp, setCurrTransSumUp] = useState([])   
+    const inputRef = useRef(null)
+    // const selectRef = useRef(null)
     const notify = () => toast.error("You have to quote the investment value ",{
       position: "top-right",
       autoClose: 4000,
@@ -19,10 +17,20 @@ import { SliderValueLabel } from "@mui/material";
       draggable: true,
       progress: undefined,
       theme: "colored",
-      // transition: Bounce,
-    
+      // transition: Bounce,    
     })
-    const {setCurrencyROI} = useCalculateContext()
+    const notify2 = () => toast.warning("Hola Hola, You have to buy something first !!! ",{
+      position: "top-right",
+      autoClose: 4000,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",       
+    })
+    
+    const {setCurrencyROI, setTotalROI} = useCalculateContext()
     const [toggle, setToggle] = useState()   
     const [investVal, setInvestVal] = useState(0)
     const [transRate, setTransRate] = useState(0)
@@ -31,37 +39,58 @@ import { SliderValueLabel } from "@mui/material";
 
     const passBuyRates = (e,val) => {         
       setTransRate(val)  
-      setToggle(true)      
-       
+      setToggle(true)
+      inputRef.current.value = ""            
     }
     const passSellRates = (e,val) => {      
       setTransRate(val)
       setToggle(false)  
-         
-    }     
-    
-    useEffect(()=> {  
-      !investVal ? notify() : transRate && setCurrTransDetails([...currTransDetails, dataObj]) 
+      inputRef.current.value = ""      
+    }  
+   
+    let buy = currTransSumUp.filter(({bought}) => bought)
+    buy = buy.reduce((acc,curr) => acc + curr.bought, toggle && Number(dataObj.value))
+    let sell = currTransSumUp.filter(({sold}) => sold)
+    sell = sell.reduce((acc,curr) => acc + curr.sold, !toggle && Number(dataObj.value))       
+    //  const bought = currTransSumUp.reduce((acc,current) => acc + current.bought, toggle && Number(dataObj.value))     
 
-      toggle ? setCurrTransSumUp([...currTransSumUp, {bought: Number(transRate * investVal)}]) : setCurrTransSumUp([...currTransSumUp, {sold: Number(transRate * investVal)}])
-    },[transRate])
-    const bought = currTransSumUp.reduce((acc,current) => acc + current.bought, 0)
-    const sold = currTransSumUp.reduce((acc,current) => acc + current.sold, 0)
+    useEffect(()=> {          
+      if(buy && sell){      
+          if(buy > sell){
+            const profit = (buy - sell).toFixed(2)         
+            setCurrencyROI(profit)          
+            setTotalROI(profit)          
+          } else {
+            const loss = (sell - buy).toFixed(2)
+            setCurrencyROI(loss)
+            setTotalROI(loss)
+          }       
+      } 
+      if(currTransSumUp.length > 0){
+        !investVal ? notify() : transRate && setCurrTransDetails([...currTransDetails, dataObj]) 
+      }
 
-    console.log(transRate, investVal)
-    console.log(currTransSumUp)
-    console.log(bought)
-    console.log(sold)
-    
+
+      if(toggle === false && !buy ){
+        notify2()
+        setCurrTransDetails([])
+      } else {    
+        toggle ? setCurrTransSumUp([...currTransSumUp, {bought: Number(transRate * investVal)}]) : setCurrTransSumUp([...currTransSumUp, {sold: Number(transRate * investVal)}])     
+      }         
+      
+    },[transRate])   
+   
+  
     return (
       <div className="mt-24 mb-8 flex flex-col gap-12">
         <div className="flex justify-between">
-          <div className="flex gap-2">
+          <div className="flex gap-2 ">
             <Select
-                // defaultValue={transRate}            
+                // defaultValue={``}   
+                // selectRef={inputRef}
                 color="primary"              
                 disabled={false}
-                placeholder="buy" 
+                placeholder="buy by rate" 
                 size="md"
                 variant="outlined"                
                 onChange={passBuyRates} 
@@ -70,12 +99,11 @@ import { SliderValueLabel } from "@mui/material";
                   <Option key={i} value={val[`${intoCurrency}`]}>{val[`${intoCurrency}`]} </Option>
                 ))}
             </Select>          
-            <Select
-                // defaultValue={transRate}
-                color="primary"
+            <Select               
+                color="primary"              
                 // multiple
                 disabled={false}
-                placeholder="sell " 
+                placeholder="sell by rate " 
                 size="md"
                 variant="outlined"
                 onChange={passSellRates }   
@@ -83,11 +111,11 @@ import { SliderValueLabel } from "@mui/material";
                 { Object.entries(timeSeries?.rates || {})?.sort()?.map(([key,val],i) =>(
                   <Option key={i} value={val[`${intoCurrency}`]}>{val[`${intoCurrency}`]} </Option>
                 ))}
-            </Select>
+            </Select>         
 
           </div>
             <div>
-              <Input label="Investment value"  onChange={(e) =>setInvestVal( Number(e.target.value)  )} />
+              <Input inputRef ={inputRef} label="Investment value" type="number" onChange={(e) =>setInvestVal( Number(e.target.value))}/>
               <ToastContainer />
             </div>
         </div>
@@ -123,13 +151,11 @@ import { SliderValueLabel } from "@mui/material";
                       key === currTransDetails.length - 1
                         ? ""
                         : "border-b border-blue-gray-50"
-                    }`;
-  
+                    }`;  
                     return (
                       <tr key={key} >
                         <td className={className}>
-                          <div className="flex items-center gap-4">
-                          
+                          <div className="flex items-center gap-4">                          
                             <div>
                               <Typography
                                 variant="h6"
@@ -156,11 +182,9 @@ import { SliderValueLabel } from "@mui/material";
                         </td>
                         <td className={className}>
                           <Typography className="text-md font-semibold text-blue-gray-600">
-                            {/* {status==="Bought" ? value : (-value) } */}
                            {value}
                           </Typography>
-                        </td>
-                      
+                        </td>                      
                       </tr>
                     );
                   }

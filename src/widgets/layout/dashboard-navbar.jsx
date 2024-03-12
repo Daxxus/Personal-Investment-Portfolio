@@ -3,6 +3,7 @@ import { NavLink } from "react-router-dom"
 import { useCalculateContext } from "@/context/Calculation/useCalculateContext";
 import {Navbar,Typography,IconButton,Breadcrumbs} from "@material-tailwind/react";
 import {Cog6ToothIcon,Bars3Icon} from "@heroicons/react/24/solid";
+import millify from 'millify';
 import Button from '@mui/joy/Button';
 import Box from '@mui/joy/Box';
 import {useMaterialTailwindController,setOpenConfigurator,setOpenSidenav} from "@/context"
@@ -21,53 +22,59 @@ export function DashboardNavbar() {
   const {currencyROI, commodityyROI, coinROI, totalROI } = useCalculateContext()
   const [controller, dispatch] = useMaterialTailwindController();
   const { fixedNavbar, openSidenav } = controller;
-  const { pathname } = useLocation();
-  const [layout, page] = pathname.split("/").filter((el) => el !== "");
+  // const { pathname } = useLocation();
+  // const [layout, page] = pathname.split("/").filter((el) => el !== "");
+  console.log(currencyROI, coinROI)
   
   const Links = [
     {label: (
       <Button
-      color="primary"
-      disabled={false}
-      loading={false}
-      onClick={function(){}}
-      size="lg"
-      variant="plain"
-      >
-       ROI Coins: {coinROI}
-      </Button>),to : "/fdf"},
-    {label: (
-      <Button
-      color="success"
-      disabled={false}
-      loading={false}
-      onClick={function(){}}
-      size="lg"
-      variant="soft"
-      >
-       ROI Commodities: {commodityyROI}
-      </Button>),to : "/fwefew"},
-    {label:   ( <Button
-      color="danger"
+      color="neutral"
+      fullWidth
       disabled={false}
       loading={false}
       onClick={function(){}}
       size="lg"
       variant="outlined"
       >
-       ROI Currencies: {currencyROI}
-      </Button>),to : "/"},
+         {coinROI > 0 ? <Typography color="green" className="mt-1 mb-2 font-medium">ROI Coins: {millify(coinROI)}</Typography> :<Typography color="red" className="mt-1 mb-2 font-medium">ROI Coins:  {millify(coinROI)}</Typography>}     
+       
+      </Button>),to : "nowhere"},
+    {label: (
+      <Button
+      fullWidth
+      color="neutral"
+      disabled={false}
+      loading={false}
+      onClick={function(){}}
+      size="lg"
+      variant="outlined"
+      >
+       {commodityyROI > 0 ? <Typography color="green" className="mt-1 mb-2 font-medium">ROI Commodity: {millify(commodityyROI)}</Typography> :<Typography color="red" className="mt-1 mb-2 font-medium">ROI Commodity:  {millify(commodityyROI)}</Typography>} 
+      </Button>),to : "nowhere"},
+    {label:   ( <Button
+      color="neutral"
+      fullWidth
+      disabled={false}
+      loading={false}
+      onClick={function(){}}
+      size="lg"
+      variant="outlined"
+      >
+       {currencyROI > 0 ? <Typography color="green" className="mt-1 mb-2 font-medium">ROI Currency: {millify(currencyROI)}</Typography> :<Typography color="red" className="mt-1 mb-2 font-medium">ROI Currency:  {millify(currencyROI)}</Typography>} 
+      </Button>),to : "nowhere"},
     {label: (
       <Button
       color="neutral"
+      fullWidth
       disabled={false}
       loading={false}
       onClick={function(){}}
       size="lg"
       variant="solid"
       >
-       ROI Total: {totalROI}
-      </Button>),to : "/"},
+        {totalROI > 0 ? <Typography color="green" className="mt-1 mb-2 font-medium">ROI Total: {millify(totalROI)}</Typography> :<Typography color="red" className="mt-1 mb-2 font-medium">ROI Total:  {millify(totalROI)}</Typography>} 
+      </Button>),to : "nowhere"},
   ]
 
   return (
@@ -82,46 +89,24 @@ export function DashboardNavbar() {
       blurred={fixedNavbar}
     >
       <div className="flex flex-col-reverse justify-between gap-6 md:flex-row md:items-center">
-        <div className="">
+        <div className="grid sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4">
 
-          <Breadcrumbs
+          {/* <Breadcrumbs
             className={`bg-transparent p-0 transition-all ${
               fixedNavbar ? "mt-1" : ""
             }`}
-          >
+          > */}
             {Links.map(({label,to},i)  => (
               <Nav key={i}>
                   <NavLink
                     to={to}
-                    // end
+                    
                   >
                     {label}
                   </NavLink>
               </Nav>
-
             ))}
-
-            {/* <Link to={`/${layout}`}>
-              <Typography
-                variant="small"
-                color="blue-gray"
-                className="font-normal opacity-50 transition-all hover:text-blue-500 hover:opacity-100"
-              >
-                {layout}
-              </Typography>
-            </Link> */}
-            {/* <Typography
-              variant="small"
-              color="blue-gray"
-              className="font-normal"
-            >
-             ROI
-            </Typography> */}
-          </Breadcrumbs>
-          {/* <Typography variant="h6" color="blue-gray">
-           patrz DashboardNavbar
-          </Typography> */}
-
+          {/* </Breadcrumbs> */}
         </div>
         <div className="flex items-center">         
           <IconButton
@@ -145,6 +130,6 @@ export function DashboardNavbar() {
   );
 }
 
-DashboardNavbar.displayName = "/src/widgets/layout/dashboard-navbar.jsx";
+// DashboardNavbar.displayName = "/src/widgets/layout/dashboard-navbar.jsx";
 
 export default DashboardNavbar;

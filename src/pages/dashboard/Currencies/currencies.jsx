@@ -31,10 +31,7 @@ export const Currencies = () => {
       if(Difference_In_Days < 0 || Difference_In_Days > 365){
         notify()
         setTxt( <Typography variant='h4'>Warning "Date to" must be higher than "Date from"</Typography>)
-      } 
-      // else{
-      //   setTxt(<Typography>Well done!!!</Typography>)
-      // }     
+      }          
     },[startDate, endDate])
 
   const passCurrency = (e, val) => {     
@@ -71,8 +68,8 @@ export const Currencies = () => {
       <ToastContainer autoClose={5000} />
       <div className="mb-12 grid gap-y-10 gap-x-6 md:grid-cols-3 sm:grid-cols-2 xl:grid-cols-4 2xl:grid-cols-5"> 
        { Object.entries(fluctuation?.rates || {})?.map(([key, value]) => (
-          <Link state={{baseCurr: fluctuation?.base, dateFrom: startDate, dateTo: endDate}} key={key}  to={`/currency/${key}`  }>          
-            <AllCurrenciesCard change={value?.change_pct} startRate={value?.start_rate} endRate={value?.end_rate} intoCurrency={key} baseCurrency={fluctuation?.base}/>
+        <Link state={{baseCurr: fluctuation?.base, dateFrom: startDate, dateTo: endDate}} key={key}  to={`/currency/${key}`}>          
+          <AllCurrenciesCard change={value?.change_pct} startRate={value?.start_rate} endRate={value?.end_rate} intoCurrency={key} baseCurrency={fluctuation?.base}/>
           </Link>        
         ))}
       </div>

@@ -6,6 +6,8 @@ import CardContent from '@mui/joy/CardContent';
 import Typography from '@mui/joy/Typography';
 import { FaChartLine } from "react-icons/fa";
 import millify from 'millify';
+  /* emotion-disable-server-rendering-unsafe-selector-warning-please-do-not-use-this-the-warning-exists-for-a-reason */
+ /* eslint-disable */
 
 export function AllCurrenciesCard({currRate, change, startRate, endRate,baseCurrency, intoCurrency}) {
   return (
@@ -18,11 +20,11 @@ export function AllCurrenciesCard({currRate, change, startRate, endRate,baseCurr
       },
       '&:hover': {
         '& > div': {
-          transform: 'rotateY(30deg)',
-          '& > div:nth-child(2)': {
+          transform: 'rotateY(30deg)',        
+          '& > div:nth-child(2)': { 
             transform: 'scaleY(0.9) translate3d(20px, 30px, 40px)',
-          },
-          '& > div:nth-child(3)': {
+          },      
+          '& > div:nth-child(3)': { 
             transform: 'translate3d(45px, 50px, 40px)',
           },
         },

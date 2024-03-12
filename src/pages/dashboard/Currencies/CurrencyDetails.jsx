@@ -13,8 +13,7 @@ import { Cog6ToothIcon } from "@heroicons/react/24/solid";
 import {useGetCurrenciesSymbolsQuery,useGetTimeseriesRatesQuery} from '@/redux/apis/CurrencyApi';
 import {Tables} from '@/pages/dashboard/Currencies/index';
 
-const CurrencyDetails = () => {
- 
+const CurrencyDetails = () => { 
   const [controller, dispatch] = useMaterialTailwindController();
   const location = useLocation()
   const { sidenavType } = controller
@@ -79,11 +78,8 @@ const CurrencyDetails = () => {
             </div>
           </div>        
           <StackedAreas selectedCurrencies={intoCurrency} rates={timeSeries} base={baseCurr} start={startDate} end={endDate} />
-
-          {/* <div className=''> */}
-            <Tables timeSeries={timeSeries} intoCurrency={intoCurrency} baseCurrency={baseCurr}/>
-          {/* </div>        */}
-
+          <Tables timeSeries={timeSeries} intoCurrency={intoCurrency} baseCurrency={baseCurr}/>
+         
           <div className="text-blue-gray-600 mt-5">
             <Footer />
           </div>

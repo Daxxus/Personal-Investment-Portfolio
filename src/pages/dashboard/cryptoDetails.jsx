@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import HTMLReactParser from 'html-react-parser'
 import millify from 'millify'
 import { useParams } from "react-router-dom"
@@ -20,21 +20,14 @@ import { SiVirustotal } from "react-icons/si";
 import { MdBlurCircular } from "react-icons/md";
 import SelectVariants from '../details/select'
 import LineChart from './lineChart'
-import {
-	Card,
-	CardHeader,
-	CardBody,
-	Typography,	
-  } from "@material-tailwind/react";
-
-import {
-  Sidenav,
-  DashboardNavbar,
-  Configurator,
-  Footer,
-} from "@/widgets/layout";
+import {Card, CardHeader,CardBody,Typography,Chip, Input} from "@material-tailwind/react";
+import { Select, Option } from "@mui/joy";
+import {Sidenav,DashboardNavbar,Configurator,Footer} from "@/widgets/layout";
 import routes from "@/routes";
 import { useMaterialTailwindController, setOpenConfigurator } from "@/context";
+import { ToastContainer, toast } from 'react-toastify'
+import { useCalculateContext } from '@/context/Calculation/useCalculateContext'; 
+
 
 export const CryptoDetails = () => {
   const {coinId} = useParams()
@@ -43,14 +36,14 @@ export const CryptoDetails = () => {
   const [period, setPeriod ] = useState(`24h`)
   const {data:cryptoHistory}= useGetCryptoHistoryQuery({coinId, period})
   const {data:cryptoDetail, isFetching} = useGetCryptoDetailsQuery(coinId)
-	// console.log(cryptoHistory);
   const periodArray = ["1h","3h", "24h", "7d", "30d", "1y", "3m", "3y", "5y"]
   const singleCryptoDetail = cryptoDetail?.data.coin
-  	
+  
   const setSelect = (e) => {	
-	setPeriod(e.target.value)
-  }
- 
+	  setPeriod(e.target.value)
+	}
+	
+	console.log(cryptoHistory);
   const cryptoStats = [
     	{ title: "Rank", value: singleCryptoDetail?.rank, icon: <MdNumbers /> },
 		{
