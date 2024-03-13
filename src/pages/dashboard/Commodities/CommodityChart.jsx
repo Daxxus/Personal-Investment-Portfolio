@@ -8,8 +8,8 @@ Chart.register(...registerables)
 
 const CommodityLineChart = ({ history, name, currency }) => {    
 	const [chartData, setChartData] = useState([])
-	const commodityPrice = []
-	const commodityDate = []
+	// const commodityPrice = []
+	// const commodityDate = []
     const currentPrice = history?.data[0]?.Price
     const lastPrice = history?.data[history?.data.length -1]?.Price
 	const change = (currentPrice - lastPrice) / lastPrice *100
@@ -18,7 +18,7 @@ const CommodityLineChart = ({ history, name, currency }) => {
 	// 	commodityPrice.push(history?.data[i]?.Price)
     //     commodityDate.push(history?.data[i]?.Date)
 	// }	
-//   console.log(history?.data?.map(({Date}) => Date ));
+
 	const chart = () => {
 		setChartData(history.data.map(({Price}) => Price ))
 	}
@@ -26,7 +26,7 @@ const CommodityLineChart = ({ history, name, currency }) => {
 		chart();
 	  },[])
 	  
-console.log(chartData);
+
 	const data = {
 		labels: history?.data?.map(({Date}) => Date ),
 		datasets: [

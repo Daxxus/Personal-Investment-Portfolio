@@ -6,8 +6,6 @@ import millify from "millify"
 Chart.register(...registerables)
 
 const LineChart = ({ coinHistory, currentPrice, coinName }) => {
-	// console.log(coinHistory)
-	// console.log(currentPrice);
 	const coinPrice = []
 	const coinTimestamp = []
 	const change = coinHistory?.data?.change
@@ -22,7 +20,7 @@ const LineChart = ({ coinHistory, currentPrice, coinName }) => {
 			).toLocaleDateString()
 		)
 	}
-// console.log(coinTimestamp);
+
 	const data = {
 		labels: coinTimestamp,
 		datasets: [
@@ -58,7 +56,7 @@ const LineChart = ({ coinHistory, currentPrice, coinName }) => {
 				{coinName} Price Chart
 				</Typography>
 				<div className="justify-between flex  "> 
-					{ change > 0 ? <Typography color="green" className=" font-bold px-4">Change: {change && millify(change)}%</Typography> :<Typography color="red" className="font-bold px-4">Change: {change &&  millify(change)}%</Typography>}
+					{ change > 0 ? <Typography color="green" className=" font-bold px-4">Change: {change && millify(change ,{precision:2})}%</Typography> :<Typography color="red" className="font-bold px-4">Change: {change &&  millify(change ,{precision:2})}%</Typography>}
 					<Typography className="font-bold">
 					Current {coinName} Price: $ {currentPrice}
 					</Typography>

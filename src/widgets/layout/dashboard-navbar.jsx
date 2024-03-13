@@ -19,12 +19,10 @@ const Nav = ({children}) => {
   )
 }
 export function DashboardNavbar() {
-  const {currencyROI, commodityyROI, coinROI, totalROI } = useCalculateContext()
+  const {currencyROI, commodityyROI, coinROI } = useCalculateContext()
   const [controller, dispatch] = useMaterialTailwindController();
-  const { fixedNavbar, openSidenav } = controller;
-  // const { pathname } = useLocation();
-  // const [layout, page] = pathname.split("/").filter((el) => el !== "");
-  console.log(currencyROI, coinROI)
+  const { fixedNavbar, openSidenav } = controller; 
+  const sumUp =  Number(currencyROI )  + Number(coinROI) + Number (commodityyROI)
   
   const Links = [
     {label: (
@@ -73,7 +71,7 @@ export function DashboardNavbar() {
       size="lg"
       variant="solid"
       >
-        {totalROI > 0 ? <Typography color="green" className="mt-1 mb-2 font-medium">ROI Total: {millify(totalROI)}</Typography> :<Typography color="red" className="mt-1 mb-2 font-medium">ROI Total:  {millify(totalROI)}</Typography>} 
+        {sumUp > 0 ? <Typography color="green" className="mt-1 mb-2 font-medium">ROI Total: {millify(sumUp)}</Typography> :<Typography color="red" className="mt-1 mb-2 font-medium">ROI Total:  {millify(sumUp)}</Typography>} 
       </Button>),to : "nowhere"},
   ]
 

@@ -7,7 +7,7 @@ import { useEffect, useState, useRef } from "react";
   export function Tables({timeSeries, intoCurrency, baseCurrency}) {
     const [currTransSumUp, setCurrTransSumUp] = useState([])   
     const inputRef = useRef(null)
-    // const selectRef = useRef(null)
+   
     const notify = () => toast.error("You have to quote the investment value ",{
       position: "top-right",
       autoClose: 4000,
@@ -30,7 +30,7 @@ import { useEffect, useState, useRef } from "react";
       theme: "colored",       
     })
     
-    const {setCurrencyROI, setTotalROI} = useCalculateContext()
+    const {setCurrencyROI} = useCalculateContext()
     const [toggle, setToggle] = useState()   
     const [investVal, setInvestVal] = useState(0)
     const [transRate, setTransRate] = useState(0)
@@ -56,39 +56,31 @@ import { useEffect, useState, useRef } from "react";
 
     useEffect(()=> {          
       if(buy && sell){      
-          if(buy > sell){
-            const profit = (buy - sell).toFixed(2)         
-            setCurrencyROI(profit)          
-            setTotalROI(profit)          
-          } else {
-            const loss = (sell - buy).toFixed(2)
-            setCurrencyROI(loss)
-            setTotalROI(loss)
-          }       
+         const loss = (buy - sell).toFixed(2)         
+         setCurrencyROI(Number(loss))                  
+          
+         const profit = (sell - buy).toFixed(2)
+         setCurrencyROI(Number(profit))        
       } 
       if(currTransSumUp.length > 0){
         !investVal ? notify() : transRate && setCurrTransDetails([...currTransDetails, dataObj]) 
       }
-
 
       if(toggle === false && !buy ){
         notify2()
         setCurrTransDetails([])
       } else {    
         toggle ? setCurrTransSumUp([...currTransSumUp, {bought: Number(transRate * investVal)}]) : setCurrTransSumUp([...currTransSumUp, {sold: Number(transRate * investVal)}])     
-      }         
-      
-    },[transRate])   
-   
+      } 
+    },[transRate])      
   
     return (
       <div className="mt-24 mb-8 flex flex-col gap-12">
-        <div className="flex justify-between">
-          <div className="flex gap-2 ">
-            <Select
-                // defaultValue={``}   
-                // selectRef={inputRef}
-                color="primary"              
+        <div className="flex justify-between mx-4">
+          <div className="flex gap-2 ">            
+            <Select               
+                // selectRef={inputRef}                
+                color="success"              
                 disabled={false}
                 placeholder="buy by rate" 
                 size="md"
@@ -100,7 +92,7 @@ import { useEffect, useState, useRef } from "react";
                 ))}
             </Select>          
             <Select               
-                color="primary"              
+                color="danger"              
                 // multiple
                 disabled={false}
                 placeholder="sell by rate " 
@@ -115,7 +107,7 @@ import { useEffect, useState, useRef } from "react";
 
           </div>
             <div>
-              <Input inputRef ={inputRef} label="Investment value" type="number" onChange={(e) =>setInvestVal( Number(e.target.value))}/>
+              <Input inputRef ={inputRef} label="Investment Unit" type="number" onChange={(e) =>setInvestVal( Number(e.target.value))}/>
               <ToastContainer />
             </div>
         </div>

@@ -5,4 +5,5 @@ export * from "@/pages/dashboard/charts";
 export * from "@/pages/dashboard/cryptoDetails";
 export * from "@/pages/dashboard/lineChart";
 export * from "@/pages/dashboard/newsCard";
+export * from "@/pages/dashboard/CryptoTable";
 

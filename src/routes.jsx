@@ -22,26 +22,7 @@ export const routes = [
         name: "dashboard",
         path: "/Home",
         element: <Home />,
-      },
-      
-      // {
-      //   icon: <CurrencyBitcoinOutlinedIcon {...icon} />,
-      //   name: "Cryptos",
-      //   path: "/cryptos",
-      //   element: <Cryptos />,
-      // },
-      // {
-      //   icon: <NewspaperOutlinedIcon {...icon} />,
-      //   name: "news",      
-      //   path: '/news',
-      //   element: <News />,
-      // },
-      // {
-      //   icon: <QueryStatsOutlinedIcon {...icon} />,
-      //   name: "charts",
-      //   path: "/charts",
-      //   element: <Charts />,
-      // },
+      },    
     ],
   },
   {
@@ -60,12 +41,12 @@ export const routes = [
         path: '/news',
         element: <News />,
       },
-      {
-        icon: <QueryStatsOutlinedIcon {...icon} />,
-        name: "charts",
-        path: "/charts",
-        element: <Charts />,
-      },     
+      // {
+      //   icon: <QueryStatsOutlinedIcon {...icon} />,
+      //   name: "charts",
+      //   path: "/charts",
+      //   element: <Charts />,
+      // },     
     ],
   },
   {
@@ -80,7 +61,7 @@ export const routes = [
       },
       {
         icon: <NewspaperOutlinedIcon {...icon} />,
-        name: "Currencies news",
+        name: "news",
         path: "/currenciesNews",
         element: <CurrenciesNews />,
       },     
@@ -98,7 +79,7 @@ export const routes = [
       },
       {
         icon: <NewspaperOutlinedIcon {...icon} />,
-        name: "Commodities news",
+        name: "news",
         path: "/commoditiesNews",
         element: <CommoditiesNews />,
       },     

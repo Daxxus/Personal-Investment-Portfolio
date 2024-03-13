@@ -1,12 +1,7 @@
 import React from 'react'
 import { useParams } from 'react-router-dom'
 import CircularWithValueLabel from '../../details/loader'
-import {
-  Sidenav,
-  DashboardNavbar,
-  Configurator,
-  Footer,
-} from "@/widgets/layout";
+import {Sidenav,DashboardNavbar,Configurator,Footer} from "@/widgets/layout";
 import routes from "@/routes";
 import { useMaterialTailwindController, setOpenConfigurator } from "@/context";
 import { IconButton } from "@material-tailwind/react";
@@ -16,15 +11,12 @@ import CommodityLineChart from './CommodityChart';
 import { useLocation } from 'react-router-dom'
 import {Card,	CardHeader,	CardBody,	Typography,	} from "@material-tailwind/react";
 import { FcComboChart } from "react-icons/fc";
-// import millify from 'millify';
-import { Ri24HoursFill } from "react-icons/ri";
-import { FcSalesPerformance } from "react-icons/fc";
+import {CommodityTableTransactions} from "@/pages/dashboard/Commodities/index"
 
 export const CommodityDetails = () => {
   const location = useLocation()
-  const { curr } = location.state
+  const { curr } = location.state || {}
   let {commId} = useParams()  
-//  console.log(commId)
 
  if(commId.slice(0,3) === `MCX`){
       if(commId.includes(`WTI`)){   
@@ -45,8 +37,7 @@ export const CommodityDetails = () => {
   const {data: singleCommodity, isFetching} = useGetSingleCommoditiesQuery(commId)
   const [controller, dispatch] = useMaterialTailwindController();
   const { sidenavType } = controller;
-  // console.log(singleCommodity?.data);
-
+ 
   if(isFetching) return <CircularWithValueLabel/>
   return (
     <main  className="min-h-screen bg-blue-gray-50/50">      
@@ -69,7 +60,9 @@ export const CommodityDetails = () => {
           <Cog6ToothIcon className="h-5 w-5" />
           </IconButton>
           <CommodityLineChart history={singleCommodity} name={commId} currency={curr}/>   
-
+          <Typography variant="h4" color="blue" className="font-normal m-5" >
+			      <a href="#table"> <button> Check out Your transaction history </button> </a>
+		      </Typography>
           <Card className='mt-12 mb-8'>
             <CardHeader variant="gradient" color="teal" className="mb-8 p-6">
             <Typography variant="h6" color="white">
@@ -78,13 +71,7 @@ export const CommodityDetails = () => {
             </CardHeader>
             <CardBody >
               <table className="w-full table-auto ">	
-                {/* <thead className='flex justify-end'>
-                    <tr className='mr-6 ' >                         
-                      <td  className='px-7'>{curr} </td>
-                      <td className='px-7'><FcSalesPerformance /></td>
-                      <td className='px-7' >  Vol.  </td>                         
-                    </tr>
-                </thead> */}
+             
                 
                 <tbody>				
                   {singleCommodity?.data.map((item,i) =>  (    
@@ -129,8 +116,11 @@ export const CommodityDetails = () => {
               </table>
             </CardBody>
 			    </Card>
-
-          <div className="text-blue-gray-600">
+          <div id='table'>
+            <CommodityTableTransactions name={commId} commodityHistory={singleCommodity}/>
+          </div>
+          
+          <div className="text-blue-gray-600" >
             <Footer />
           </div>
         </div>

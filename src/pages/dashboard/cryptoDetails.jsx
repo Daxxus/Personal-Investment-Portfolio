@@ -21,13 +21,10 @@ import { MdBlurCircular } from "react-icons/md";
 import SelectVariants from '../details/select'
 import LineChart from './lineChart'
 import {Card, CardHeader,CardBody,Typography,Chip, Input} from "@material-tailwind/react";
-import { Select, Option } from "@mui/joy";
 import {Sidenav,DashboardNavbar,Configurator,Footer} from "@/widgets/layout";
 import routes from "@/routes";
-import { useMaterialTailwindController, setOpenConfigurator } from "@/context";
-import { ToastContainer, toast } from 'react-toastify'
-import { useCalculateContext } from '@/context/Calculation/useCalculateContext'; 
-
+import { useMaterialTailwindController, setOpenConfigurator } from "@/context"
+import {CryptoTable} from "@/pages/dashboard/index"
 
 export const CryptoDetails = () => {
   const {coinId} = useParams()
@@ -41,9 +38,8 @@ export const CryptoDetails = () => {
   
   const setSelect = (e) => {	
 	  setPeriod(e.target.value)
-	}
+	}	
 	
-	console.log(cryptoHistory);
   const cryptoStats = [
     	{ title: "Rank", value: singleCryptoDetail?.rank, icon: <MdNumbers /> },
 		{
@@ -114,7 +110,7 @@ export const CryptoDetails = () => {
     if(isFetching) return <CircularWithValueLabel/>
 
   return (
-    <div className="min-h-screen bg-blue-gray-50/50">
+    <div className="min-h-screen bg-blue-gray-50/50  ">
       <Sidenav
         routes={routes}
         brandImg={
@@ -136,6 +132,9 @@ export const CryptoDetails = () => {
 
         <SelectVariants timeSpan={periodArray} change={setSelect} period={period}/>
         <LineChart coinHistory={cryptoHistory} currentPrice={singleCryptoDetail?.price && millify(singleCryptoDetail?.price)} coinName={singleCryptoDetail?.name}/>
+		<Typography variant="h4" color="red" className="font-normal m-5" >
+		<a href="#table"><button> Check out Your transaction history</button></a>
+		</Typography>
 
 		<div className="mt-12 mb-8 grid grid-cols-1 md:grid-cols-1 xl:grid-cols-2 gap-10">
 			<Card>
@@ -272,8 +271,9 @@ export const CryptoDetails = () => {
 					</table>
 				</CardBody>
 			</Card>			
-		</div>        
-		<div className="text-blue-gray-600">
+		</div> 
+		<CryptoTable coinHistory={cryptoHistory} coinName={singleCryptoDetail?.name}/>    
+		<div className="text-blue-gray-600" id='table' >
 			<Footer />
 		</div>
       </div>
