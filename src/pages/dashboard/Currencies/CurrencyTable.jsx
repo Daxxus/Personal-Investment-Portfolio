@@ -73,11 +73,11 @@ import { useEffect, useState, useRef } from "react";
         toggle ? setCurrTransSumUp([...currTransSumUp, {bought: Number(transRate * investVal)}]) : setCurrTransSumUp([...currTransSumUp, {sold: Number(transRate * investVal)}])     
       } 
     },[transRate])      
-  
+    // flex justify-between mx-4
     return (
       <div className="mt-24 mb-8 flex flex-col gap-12">
-        <div className="flex justify-between mx-4">
-          <div className="flex gap-2 ">            
+        <div className="grid sm:grid-cols-2 mx-4">
+          <div className="flex sm:gap-2 gap-0">            
             <Select               
                 // selectRef={inputRef}                
                 color="success"              
@@ -106,7 +106,7 @@ import { useEffect, useState, useRef } from "react";
             </Select>         
 
           </div>
-            <div>
+            <div className=" sm:ml-0">
               <Input inputRef ={inputRef} label="Investment Unit" type="number" onChange={(e) =>setInvestVal( Number(e.target.value))}/>
               <ToastContainer />
             </div>
@@ -118,17 +118,17 @@ import { useEffect, useState, useRef } from "react";
             </Typography>
           </CardHeader>
           <CardBody className="overflow-x-scroll px-0 pt-0 pb-2">
-            <table className="w-full min-w-[640px] table-auto">
+            <table className="w-full min-w-[340px] table-auto">
               <thead>
                 <tr>
                   {["forex pair", "rate", "status", "transaction value"].map((el) => (
                     <th
                       key={el}
-                      className="border-b border-blue-gray-50 py-3 px-5 text-left"
+                      className="border-b border-blue-gray-50 py-3 px-0 sm:px-5  text-left"
                     >
                       <Typography
                         // variant="small"
-                        className="text-[18px] font-bold uppercase text-blue-800"
+                        className="sm:text-[18px] font-bold uppercase text-blue-800"
                       >
                         {el}
                       </Typography>
@@ -139,7 +139,7 @@ import { useEffect, useState, useRef } from "react";
               <tbody>
                 {currTransDetails.map(
                   ({ forexPair, rate, status, value }, key) => {
-                    const className = `py-3 px-5 ${
+                    const className = `py-3 px-0 sm:px-5 ${
                       key === currTransDetails.length - 1
                         ? ""
                         : "border-b border-blue-gray-50"

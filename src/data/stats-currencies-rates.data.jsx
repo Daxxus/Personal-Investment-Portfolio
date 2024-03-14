@@ -120,8 +120,7 @@
           label: "day-to-day",
         },
       },
-    ]
-    // console.log(forexPairs.slice(0,2));
+    ]    
    
   return forexPairs
     

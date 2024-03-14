@@ -5,12 +5,6 @@ import { StatisticsCard, StatsCurrencyCard } from "@/widgets/cards";
 import useStatisticCard from "@/data/statistics-cards-data";
 import useCurrenciesStatsDataCard from "@/data/stats-currencies-rates.data";
 import { Cryptos } from "./cryptos";
-import { Commodities } from "./Commodities";
-import { StatisticsChart } from "@/widgets/charts";
-import { useGetCryptosQuery } from "@/redux/apis/CryptoApi";
-import { projectsData, statisticsChartsData } from "@/data";
-import { CheckCircleIcon, ClockIcon } from "@heroicons/react/24/solid";
-
 
 export function Home() { 
   const cryptos  = useStatisticCard()
@@ -57,24 +51,7 @@ export function Home() {
           />
         ))}
       </div>
-      {/* <div className="mb-6 grid grid-cols-1 gap-y-12 gap-x-6 md:grid-cols-1 xl:grid-cols-1 ">
-        {statisticsChartsData.map((props) => (//charty
-          <StatisticsChart          
-            key={props.title}
-            {...props}
-            footer={
-              <Typography
-                variant="small"
-                className="flex items-center font-normal text-blue-gray-600"
-              >
-                <ClockIcon strokeWidth={2} className="h-4 w-4 text-blue-gray-400" />
-                &nbsp;{props.footer}
-              </Typography>
-            }
-          />
-        ))}
-      </div> */}
-      {/* xl:grid-cols-3 */}
+    
       <div className="mb-4 grid grid-cols-1 gap-6 ">
         <div className="flex justify-between mb-20">
            <Typography variant="h6" color="blue-gray" className="mb-2">
@@ -86,20 +63,7 @@ export function Home() {
         </div>
            <Cryptos top5 />       
       </div>
-      <div className="mb-4 grid grid-cols-1 gap-6 ">
-        <div className="flex justify-between mb-20">
-           <Typography variant="h6" color="blue-gray" className="mb-2">
-            Top 5 Commodities
-            </Typography>
-            <Typography variant="h6" color="blue-gray" className="mb-2">
-              <Link to={`/dashboard/commodities`}>More Commodities</Link>              
-            </Typography>
-        </div>
-        <div>
-
        
-        </div>
-      </div>
     </div>
   );
 }

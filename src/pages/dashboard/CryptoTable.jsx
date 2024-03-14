@@ -73,8 +73,8 @@ export const CryptoTable = ({coinHistory, coinName}) => {
 
   return (
     <div className="mt-12 mb-8 flex flex-col gap-12">
-      <div className="flex justify-between mx-4">
-          <div className="flex gap-2 ">            
+      <div className="grid sm:grid-cols-2 mx-4">
+          <div className="flex sm:gap-2 gap-0">            
             <Select                             
                 color="success"              
                 disabled={false}
@@ -100,7 +100,7 @@ export const CryptoTable = ({coinHistory, coinName}) => {
                 ))}
             </Select>  
           </div>
-            <div>
+            <div className=" sm:ml-0">
               <Input inputRef ={inputRef} label="Investment value" type="number" onChange={(e) =>setInvestVal( Number(e.target.value))}/>
               <ToastContainer />
             </div>
@@ -112,13 +112,13 @@ export const CryptoTable = ({coinHistory, coinName}) => {
             </Typography>
           </CardHeader>
           <CardBody className="overflow-x-scroll px-0 pt-0 pb-2">
-            <table className="w-full min-w-[640px] table-auto">
+            <table className="w-full min-w-[340px] table-auto">
               <thead>
                 <tr>
                   {["Coin Name", "price", "status", "units", "transaction value"].map((el) => (
                     <th
                       key={el}
-                      className="border-b border-blue-gray-50 py-3 px-5 text-left"
+                      className="border-b border-blue-gray-50 py-3 px-0 md:px-5 text-left"
                     >
                       <Typography                       
                         className="text-[18px] font-bold uppercase text-blue-800"
@@ -132,7 +132,7 @@ export const CryptoTable = ({coinHistory, coinName}) => {
               <tbody>
                 {currTransDetails.map(
                   ({ coinName, price, status, unit ,value }, key) => {
-                    const className = `py-3 px-5 ${
+                    const className = `py-3 px-0 md:px-5 ${
                       key === currTransDetails.length - 1
                         ? ""
                         : "border-b border-blue-gray-50"

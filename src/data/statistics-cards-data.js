@@ -17,7 +17,7 @@ return [
       value: `${crypt?.data.stats.totalMarketCap && millify(crypt?.data.stats.totalMarketCap)}`,        
       footer: {
         color: "text-green-500",
-        value: "+55%",
+        value: "+515%",
         label: "than last week",
       },
     },
