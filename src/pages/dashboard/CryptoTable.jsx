@@ -121,7 +121,7 @@ export const CryptoTable = ({coinHistory, coinName}) => {
                       className="border-b border-blue-gray-50 py-3 px-0 md:px-5 text-left"
                     >
                       <Typography                       
-                        className="text-[18px] font-bold uppercase text-blue-800"
+                        className="sm:text-[18px] text-[12px] font-bold uppercase text-blue-800"
                       >
                         {el}
                       </Typography>
@@ -132,7 +132,7 @@ export const CryptoTable = ({coinHistory, coinName}) => {
               <tbody>
                 {currTransDetails.map(
                   ({ coinName, price, status, unit ,value }, key) => {
-                    const className = `py-3 px-0 md:px-5 ${
+                    const className = `py-3 px-0 md:px-5 sm:text-[18px] text-[12px] ${
                       key === currTransDetails.length - 1
                         ? ""
                         : "border-b border-blue-gray-50"
@@ -145,7 +145,7 @@ export const CryptoTable = ({coinHistory, coinName}) => {
                               <Typography
                                 variant="h6"
                                 color="blue-gray"
-                                className="font-semibold"
+                                className="font-semibold sm:text-[18px] text-[12px]"
                               >
                                 {coinName}
                               </Typography>                             
@@ -162,7 +162,7 @@ export const CryptoTable = ({coinHistory, coinName}) => {
                             variant="gradient"
                             color={status ? "green" : "red"}
                             value={status ? "Bought" : "Sold"}
-                            className="py-0.5 px-2 text-[15px] font-medium w-fit"
+                            className="py-0.5 px-2 sm:text-[18px] text-[12px] font-medium w-fit"
                           />
                         </td>
                         <td className={className}>

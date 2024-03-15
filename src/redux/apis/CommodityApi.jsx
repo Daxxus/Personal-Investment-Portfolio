@@ -9,7 +9,8 @@ const options = {
 	method: 'POST',
 	headers: {
 		'content-type': 'application/x-www-form-urlencoded',
-		'X-RapidAPI-Key': '9556836d5emsha94b903c8dce84ap1067fbjsn0931cfa53b42',
+		// 'X-RapidAPI-Key': '9556836d5emsha94b903c8dce84ap1067fbjsn0931cfa53b42',
+        'X-RapidAPI-Key': '9556836d5emsha94b903c8dce84ap1067fbjsn0931cfa53b42',
 		'X-RapidAPI-Host': 'investing4.p.rapidapi.com'
 	},      
     body: new URLSearchParams({commodity: ``})
