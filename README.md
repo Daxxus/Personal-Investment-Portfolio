@@ -1,10 +1,8 @@
 ## Sources
 ### This app is build on Material Tailwind Dashboard React template
 
-## React + TypeScript + Vite
 ## The app title: Your personal investment portfolio (cryptos, currencies, commodities)
 ### Usage: As aforementioned the app enables a user/investor to invest on the basis of three different platforms (cryptocurrencies, commodities, currencies), getting the recent posts, informations,knowledge of the abovementioned platforms, making virtual transactions or checking out up to the minute return on investment (ROI)
-
 #### Inspiration: JavaScript Mastery https://www.youtube.com/watch?v=9DDX3US3kss
 
 #### Technologies: 
